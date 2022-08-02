@@ -1,0 +1,160 @@
+$ mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.30-0ubuntu0.22.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database aadarsh;
+ERROR 1007 (HY000): Can't create database 'aadarsh'; database exists
+mysql> drop aadarsh;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'aadarsh' at line 1
+mysql> use databse;
+ERROR 1049 (42000): Unknown database 'databse'
+mysql> use aadarsh;
+Database changed
+mysql> create table employe(sr_no int PRIMARY KEY AUTO_INCREMENT,name varchar(15);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> create table employe(sr_no int PRIMARY KEY AUTO_INCREMENT,name varchar(15) ,city varchar
+    -> create table employe(sr_no int PRIMARY KEY AUTO_INCREMENT,name varchar(15) ,city varchar(15),id int UNIQUE);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'create table employe(sr_no int PRIMARY KEY AUTO_INCREMENT,name varchar(15) ,city' at line 2
+mysql> create table employe(sr_no int PRIMARY KEY AUTO_INCREMENT,name varchar(15) ,city varchar(15),id int UNIQUE);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> insert into employe values(1,"rakesh","pune",452);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into employe values("shyam","nanded",456);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into employe(name,city,id) values("shyam","nanded",456);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select*from employe;
++-------+--------+--------+------+
+| sr_no | name   | city   | id   |
++-------+--------+--------+------+
+|     1 | rakesh | pune   |  452 |
+|     2 | shyam  | nanded |  456 |
++-------+--------+--------+------+
+2 rows in set (0.00 sec)
+
+mysql> create table employe(sr_no int PRIMARY KEY AUTO_INCREMENT,name varchar(15) ,city varchar(15),id int UNIQUE AUTO_INCREMENT);
+ERROR 1050 (42S01): Table 'employe' already exists
+mysql> create table student(sr_no int PRIMARY KEY AUTO_INCREMENT,name varchar(15) ,city varchar(15),id int UNIQUE AUTO_INCREMENT);
+ERROR 1075 (42000): Incorrect table definition; there can be only one auto column and it must be defined as a key
+mysql> create table employe(sr_no int PRIMARY KEY AUTO_INCREMENT,name varchar(15) ,city varchar(15),id int UNIQUE );
+ERROR 1050 (42S01): Table 'employe' already exists
+mysql> insert into employe values(3,"sarthak","wadodra",753);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select*from employe;
++-------+---------+---------+------+
+| sr_no | name    | city    | id   |
++-------+---------+---------+------+
+|     1 | rakesh  | pune    |  452 |
+|     2 | shyam   | nanded  |  456 |
+|     3 | sarthak | wadodra |  753 |
++-------+---------+---------+------+
+3 rows in set (0.00 sec)
+
+mysql> insert into employe(name,city,id) values("rajesh","akurdi",851);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select*from employe;
++-------+---------+---------+------+
+| sr_no | name    | city    | id   |
++-------+---------+---------+------+
+|     1 | rakesh  | pune    |  452 |
+|     2 | shyam   | nanded  |  456 |
+|     3 | sarthak | wadodra |  753 |
+|     4 | rajesh  | akurdi  |  851 |
++-------+---------+---------+------+
+4 rows in set (0.00 sec)
+
+mysql> create table weather (sr int PRIMARY KEY,intensity varchar(20) NOT NULL,speed int CHECK(speed>45));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into weather(1,NULL,50);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1,NULL,50)' at line 1
+mysql> insert into weather(1,"fast",50);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1,"fast",50)' at line 1
+mysql> insert into weather values(1,NULL,50);
+ERROR 1048 (23000): Column 'intensity' cannot be null
+mysql> insert into weather values(1,"fast",50);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into weather values(5,"fast",35);
+ERROR 3819 (HY000): Check constraint 'weather_chk_1' is violated.
+mysql> insert into weather values(5,"slow",75);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into weather values(3,"slow",45);
+ERROR 3819 (HY000): Check constraint 'weather_chk_1' is violated.
+mysql> insert into weather values(3,"slow",60);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into weather values(7,"mild",65);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select*from weather;
++----+-----------+-------+
+| sr | intensity | speed |
++----+-----------+-------+
+|  1 | fast      |    50 |
+|  3 | slow      |    60 |
+|  5 | slow      |    75 |
+|  7 | mild      |    65 |
++----+-----------+-------+
+4 rows in set (0.00 sec)
+
+mysql> create table GRADES (sr int PRIMARY KEY,intensity varchar(20) DEFAULT"OK",speed int CHECK(speed>45));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into GRADES(sr,speed)values(1,67);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> slect*from GRADES;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'slect*from GRADES' at line 1
+mysql> select*from GRADES;
++----+-----------+-------+
+| sr | intensity | speed |
++----+-----------+-------+
+|  1 | OK        |    67 |
++----+-----------+-------+
+1 row in set (0.00 sec)
+
+mysql> insert into GRADES values(1,"aadarsg",67);
+ERROR 1062 (23000): Duplicate entry '1' for key 'GRADES.PRIMARY'
+mysql> insert into GRADES values(2,"aadarsg",67);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select*from GRADES;
++----+-----------+-------+
+| sr | intensity | speed |
++----+-----------+-------+
+|  1 | OK        |    67 |
+|  2 | aadarsg   |    67 |
++----+-----------+-------+
+2 rows in set (0.00 sec)
+
+mysql> insert into GRADES values(3,"rocky",100);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select*from GRADES;
++----+-----------+-------+
+| sr | intensity | speed |
++----+-----------+-------+
+|  1 | OK        |    67 |
+|  2 | aadarsg   |    67 |
+|  3 | rocky     |   100 |
++----+-----------+-------+
+3 rows in set (0.00 sec)
+
+mysql> 
