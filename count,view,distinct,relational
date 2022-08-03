@@ -1,0 +1,219 @@
+$ mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 10
+Server version: 8.0.30-0ubuntu0.22.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use aadarsh;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++-------------------+
+| Tables_in_aadarsh |
++-------------------+
+| GRADES            |
+| employe           |
+| warriors          |
+| weather           |
++-------------------+
+4 rows in set (0.00 sec)
+
+mysql> select*fromemploye;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'fromemploye' at line 1
+mysql> select*from employe;
++-------+---------+---------+------+
+| sr_no | name    | city    | id   |
++-------+---------+---------+------+
+|     1 | rakesh  | pune    |  452 |
+|     2 | shyam   | nanded  |  456 |
+|     3 | sarthak | wadodra |  753 |
+|     4 | rajesh  | akurdi  |  851 |
++-------+---------+---------+------+
+4 rows in set (0.00 sec)
+
+mysql> alter table employe add column birth int;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select*from employe;
++-------+---------+---------+------+-------+
+| sr_no | name    | city    | id   | birth |
++-------+---------+---------+------+-------+
+|     1 | rakesh  | pune    |  452 |  NULL |
+|     2 | shyam   | nanded  |  456 |  NULL |
+|     3 | sarthak | wadodra |  753 |  NULL |
+|     4 | rajesh  | akurdi  |  851 |  NULL |
++-------+---------+---------+------+-------+
+4 rows in set (0.00 sec)
+
+mysql> update employe set birth=30 where sr_no=1;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select*from employe;
++-------+---------+---------+------+-------+
+| sr_no | name    | city    | id   | birth |
++-------+---------+---------+------+-------+
+|     1 | rakesh  | pune    |  452 |    30 |
+|     2 | shyam   | nanded  |  456 |  NULL |
+|     3 | sarthak | wadodra |  753 |  NULL |
+|     4 | rajesh  | akurdi  |  851 |  NULL |
++-------+---------+---------+------+-------+
+4 rows in set (0.00 sec)
+
+mysql> update employe set birth=39 where sr_no=2;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update employe set birth=40 where sr_no=3;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update employe set birth=43 where sr_no=4;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select*from employe;
++-------+---------+---------+------+-------+
+| sr_no | name    | city    | id   | birth |
++-------+---------+---------+------+-------+
+|     1 | rakesh  | pune    |  452 |    30 |
+|     2 | shyam   | nanded  |  456 |    39 |
+|     3 | sarthak | wadodra |  753 |    40 |
+|     4 | rajesh  | akurdi  |  851 |    43 |
++-------+---------+---------+------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into employe values(5,"suresh","yerwada",29);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into employe values(5,"suresh",235,"yerwada",29);
+ERROR 1366 (HY000): Incorrect integer value: 'yerwada' for column 'id' at row 1
+mysql> insert into employe values(5,"suresh","yerwada",234,29);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select*from employe;
++-------+---------+---------+------+-------+
+| sr_no | name    | city    | id   | birth |
++-------+---------+---------+------+-------+
+|     1 | rakesh  | pune    |  452 |    30 |
+|     2 | shyam   | nanded  |  456 |    39 |
+|     3 | sarthak | wadodra |  753 |    40 |
+|     4 | rajesh  | akurdi  |  851 |    43 |
+|     5 | suresh  | yerwada |  234 |    29 |
++-------+---------+---------+------+-------+
+5 rows in set (0.01 sec)
+
+mysql> create view ask
+    -> as
+    -> select sr_no,name,id from employe;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select name ,city from employe where (id>400) OR (id<850);
++---------+---------+
+| name    | city    |
++---------+---------+
+| suresh  | yerwada |
+| rakesh  | pune    |
+| shyam   | nanded  |
+| sarthak | wadodra |
+| rajesh  | akurdi  |
++---------+---------+
+5 rows in set (0.00 sec)
+
+mysql> select DISTINCT(city) from employe;
++---------+
+| city    |
++---------+
+| pune    |
+| nanded  |
+| wadodra |
+| akurdi  |
+| yerwada |
++---------+
+5 rows in set (0.02 sec)
+
+mysql> count(*) from employe;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'count(*) from employe' at line 1
+mysql> select count(*) from employe;
++----------+
+| count(*) |
++----------+
+|        5 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select count(DISTICT(birth)) from employe;
+ERROR 1305 (42000): FUNCTION aadarsh.DISTICT does not exist
+mysql> select count(DISTINCT(birth)) from employe;
++------------------------+
+| count(DISTINCT(birth)) |
++------------------------+
+|                      5 |
++------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MAX(id) from employe;
++---------+
+| MAX(id) |
++---------+
+|     851 |
++---------+
+1 row in set (0.02 sec)
+
+mysql> SELECT Min(id) from employe;
++---------+
+| Min(id) |
++---------+
+|     234 |
++---------+
+1 row in set (0.00 sec)
+
+mysql> select*from employe where birth  BETWEEN 30 AND 40;
++-------+---------+---------+------+-------+
+| sr_no | name    | city    | id   | birth |
++-------+---------+---------+------+-------+
+|     1 | rakesh  | pune    |  452 |    30 |
+|     2 | shyam   | nanded  |  456 |    39 |
+|     3 | sarthak | wadodra |  753 |    40 |
++-------+---------+---------+------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select*from employe where name's%';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''s%'' at line 1
+mysql> select*from employe where name"s%";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"s%"' at line 1
+mysql> select*from employe where name like 's%';
++-------+---------+---------+------+-------+
+| sr_no | name    | city    | id   | birth |
++-------+---------+---------+------+-------+
+|     2 | shyam   | nanded  |  456 |    39 |
+|     3 | sarthak | wadodra |  753 |    40 |
+|     5 | suresh  | yerwada |  234 |    29 |
++-------+---------+---------+------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select*from employe where name like '%h';
++-------+--------+---------+------+-------+
+| sr_no | name   | city    | id   | birth |
++-------+--------+---------+------+-------+
+|     1 | rakesh | pune    |  452 |    30 |
+|     4 | rajesh | akurdi  |  851 |    43 |
+|     5 | suresh | yerwada |  234 |    29 |
++-------+--------+---------+------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select* from employe where id IN(400,700);
+Empty set (0.00 sec)
+
+mysql> 
+
