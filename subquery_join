@@ -1,0 +1,187 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| Amezon_product     |
+| Menu               |
+| Movie_list         |
+| PROJECT            |
+| aakansha           |
+| assignment         |
+| assignment2        |
+| college            |
+| custemerinfo       |
+| database2          |
+| databasename       |
+| employ_info        |
+| information_schema |
+| library            |
+| movie_reviews      |
+| mysql              |
+| performance_schema |
+| pizza_mania        |
+| samiksha           |
+| sample             |
+| school             |
+| shital             |
+| store              |
+| sys                |
+| teachers_info      |
+| tracking           |
++--------------------+
+26 rows in set (0.02 sec)
+
+mysql> create database aadarsh;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use aadarsh;
+Database changed
+mysql> create table frands(sr_no int,name varchar(20),age int,city varchar(20));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> insert into frands values(1,"santosh",20,"banglore");
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into frands values(2,"rehman",21,"pune");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into frands values(3,"sakshi",20,",mumbai");
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into frands values(4,"aadarsh",21,",akurdi");
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into frands values(5,"akash",21,"pune");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select*from frands;
++-------+---------+------+----------+
+| sr_no | name    | age  | city     |
++-------+---------+------+----------+
+|     1 | santosh |   20 | banglore |
+|     2 | rehman  |   21 | pune     |
+|     3 | sakshi  |   20 | ,mumbai  |
+|     4 | aadarsh |   21 | ,akurdi  |
+|     5 | akash   |   21 | pune     |
++-------+---------+------+----------+
+5 rows in set (0.00 sec)
+
+mysql> insert into frands(name,city)values("vedant","nashik");
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select name from frands where age>(select age from frands where name="sakshi");
++---------+
+| name    |
++---------+
+| rehman  |
+| aadarsh |
+| akash   |
++---------+
+3 rows in set (0.00 sec)
+
+mysql> select age  from frands where sr_no>(select city  from frands where name="akash");
++------+
+| age  |
++------+
+|   20 |
+|   21 |
+|   20 |
+|   21 |
+|   21 |
++------+
+5 rows in set (0.00 sec)
+
+mysql> select age  from frands where sr_no<>(select city  from frands where name="akash");
++------+
+| age  |
++------+
+|   20 |
+|   21 |
+|   20 |
+|   21 |
+|   21 |
++------+
+5 rows in set (0.00 sec)
+
+mysql> select name from frands where age<>(select age from frands where name="sakshi");
++---------+
+| name    |
++---------+
+| rehman  |
+| aadarsh |
+| akash   |
++---------+
+3 rows in set (0.00 sec)
+
+
+mysql> create table enemy(sr_no int PRIMARY KEY AUTO_INCREMENT,name varchar(20),branch varchar(20),expiry_day int);
+Query OK, 0 rows affected (0.04 sec)
+
+
+mysql> insert into enemy values(1,"ajvbcjkfdgui","bvjkshu",25);
+Query OK, 1 row affected (0.00 sec)
+
+
+mysql> insert into enemy values(2,"ajvbcjkfdgui","bvjkshu",25);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into enemy values(3,"ajv","bshu",5);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into enemy values(4,"aj","bhu",52);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into enemy values(5,"ajchdhud","bfhhfhu",532);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select*from enemy;
++-------+--------------+---------+------------+
+| sr_no | name         | branch  | expiry_day |
++-------+--------------+---------+------------+
+|     1 | ajvbcjkfdgui | bvjkshu |         25 |
+|     2 | ajvbcjkfdgui | bvjkshu |         25 |
+|     3 | ajv          | bshu    |          5 |
+|     4 | aj           | bhu     |         52 |
+|     5 | ajchdhud     | bfhhfhu |        532 |
++-------+--------------+---------+------------+
+5 rows in set (0.00 sec)
+
+
+mysql> select enemy.name,enemy.expiry_day from enemy INNER JOIN frands where enemy.sr_no=frands.sr_no;
++--------------+------------+
+| name         | expiry_day |
++--------------+------------+
+| ajvbcjkfdgui |         25 |
+| ajvbcjkfdgui |         25 |
+| ajv          |          5 |
+| aj           |         52 |
+| ajchdhud     |        532 |
++--------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select frands.name,enemy.expiry_day from enemy INNER JOIN frands where enemy.sr_no=frands.sr_no;
++---------+------------+
+| name    | expiry_day |
++---------+------------+
+| santosh |         25 |
+| rehman  |         25 |
+| sakshi  |          5 |
+| aadarsh |         52 |
+| akash   |        532 |
++---------+------------+
+5 rows in set (0.00 sec)
+
+
+mysql>  select enemy.name,enemy.expiry_day,frands.city from enemy INNER JOIN frands where enemy.sr_no=frands.sr_no;
++--------------+------------+----------+
+| name         | expiry_day | city     |
++--------------+------------+----------+
+| ajvbcjkfdgui |         25 | banglore |
+| ajvbcjkfdgui |         25 | pune     |
+| ajv          |          5 | ,mumbai  |
+| aj           |         52 | ,akurdi  |
+| ajchdhud     |        532 | pune     |
++--------------+------------+----------+
+5 rows in set (0.00 sec)
+
+
