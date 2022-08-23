@@ -1,0 +1,61 @@
+mysql> select * from enemy;
++-------+--------------+---------+------------+
+| sr_no | name         | branch  | expiry_day |
++-------+--------------+---------+------------+
+|     1 | ajvbcjkfdgui | bvjkshu |         25 |
+|     2 | ajvbcjkfdgui | bvjkshu |         25 |
+|     3 | ajv          | bshu    |          5 |
+|     4 | aj           | bhu     |         52 |
+|     5 | ajchdhud     | bfhhfhu |        532 |
++-------+--------------+---------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from frands;
++-------+---------+------+----------+
+| sr_no | name    | age  | city     |
++-------+---------+------+----------+
+|     1 | santosh |   20 | banglore |
+|     2 | rehman  |   21 | pune     |
+|     3 | sakshi  |   20 | ,mumbai  |
+|     4 | aadarsh |   21 | ,akurdi  |
+|     5 | akash   |   21 | pune     |
+|  NULL | vedant  | NULL | nashik   |
++-------+---------+------+----------+
+6 rows in set (0.00 sec)
+
+mysql> select name, sum(expiry_day) from enemy group by sr_no;
++--------------+-----------------+
+| name         | sum(expiry_day) |
++--------------+-----------------+
+| ajvbcjkfdgui |              25 |
+| ajvbcjkfdgui |              25 |
+| ajv          |               5 |
+| aj           |              52 |
+| ajchdhud     |             532 |
++--------------+-----------------+
+5 rows in set (0.00 sec)
+
+mysql> select name, sum(expiry_day) from enemy group by sr_no having count(sr_no)<2;
++--------------+-----------------+
+| name         | sum(expiry_day) |
++--------------+-----------------+
+| ajvbcjkfdgui |              25 |
+| ajvbcjkfdgui |              25 |
+| ajv          |               5 |
+| aj           |              52 |
+| ajchdhud     |             532 |
++--------------+-----------------+
+5 rows in set (0.00 sec)
+
+mysql> 
+mysql> select name, count(expiry_day) from enemy group by sr_no having count(sr_no)<2;
++--------------+-------------------+
+| name         | count(expiry_day) |
++--------------+-------------------+
+| ajvbcjkfdgui |                 1 |
+| ajvbcjkfdgui |                 1 |
+| ajv          |                 1 |
+| aj           |                 1 |
+| ajchdhud     |                 1 |
++--------------+-------------------+
+5 rows in set (0.00 sec)
